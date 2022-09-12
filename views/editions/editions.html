@@ -1,0 +1,31 @@
+<%- include("../header.html") -%>
+
+<h1>Liste des éditions (<%= model.length %>)</h1>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Editions</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/create/edition">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const edition of model) { %>
+      <tr>
+        <td><%= edition.editionName %></td>
+        <td class="d-print-none">
+          <a class="btn btn-sm btn-warning" href="/edit/edition/<%= edition.id %>">Modifier</a>
+          <a class="btn btn-sm btn-danger" href="/delete/edition/<%= edition.id %>"
+            >Supprimer</a
+          >
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../footer.html") -%>

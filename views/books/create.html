@@ -1,0 +1,30 @@
+<%- include("../header.html") -%>
+
+<h1>Ajouter un livre</h1>
+
+<form action="/create/book" method="post">
+  <div class="form-horizontal">
+
+    <div class="form-group row">
+        <label class="col-form-label col-sm-2" for="Book">Le livre</label>
+        <div class="col-sm-8">
+          <input
+            autofocus
+            class="form-control"
+            name="Book"
+            value="<%= model.title %>"
+          />
+        </div>
+      </div>
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Enregistrer" class="btn btn-default btn-success" />
+        <a class="btn btn-outline-dark cancel" href="/books">Annuler</a>
+      </div>
+    </div>
+  </div>
+</form>
+
+<%- include("../footer.html") -%>
