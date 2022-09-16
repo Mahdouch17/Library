@@ -15,18 +15,55 @@
                 />
             </div>
         </div>
-    
+        
         <div class="form-group row">
             <label class="col-form-label col-sm-2" for="Author">Author</label>
             <div class="col-sm-8">
-                <% model.authors.forEach(function(author){ %>
-                <input
-                        readonly
-                        class="form-control"
-                        id="Author"
-                        value="<%= model.book.authorId==model.author.id && author.name %>"
-                />
-                <% }) %>
+                <select class="form-control" name="Author" readonly>
+                    <!--                     <option selected>Changer l'auteur</option> -->
+                    <% model.authors.forEach(function(author){ %>
+                    <option value="<%= author.id %>"
+                    <%=author.id==model.book.authorId ? "selected" : ""%>><%= author.authorName %></option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-form-label col-sm-2" for="Edition">Edition</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="Edition" readonly>
+                    <!--                         <option selected>Changer l'édition</option> -->
+                    <% model.editions.forEach(function(edition){ %>
+                    <option value="<%= edition.id %>"
+                    <%=edition.id==model.book.editionId ? "selected" : ""%>><%= edition.editionName %></option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-form-label col-sm-2" for="Category">Catégorie</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="Category" readonly>
+                    <% model.categories.forEach(function(category){ %>
+                    <option value="<%= category.id %>"
+                    <%=category.id==model.book.categoryId ? "selected" : ""%> ><%= category.categoryName %></option>
+                    <% }) %>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label class="col-form-label col-sm-2" for="Language">Langue</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="Language" readonly>
+                    <% let lang = ["en","fr","ar"]
+                    lang.forEach(function(l){%>
+                    <option value="<%= l %>"
+                    <%=l=== model.book.language ? "selected" : ""%>><%= l %></option>
+                    <%})%>
+                </select>
             </div>
         </div>
         
