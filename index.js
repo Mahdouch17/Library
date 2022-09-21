@@ -152,9 +152,10 @@ app.get("/", async (req, res) => {
     let data = books.map(b => ({...authors.find(a => b.authorId === a.id), ...b}));
     let data1 = data.map(d => ({...editions.find(e => d.editionId === e.id), ...d}));
     let finalData = data1.map(d => ({...categories.find(c => d.categoryId === c.id), ...d}));
-
+    let myTables = {books, authors, categories, editions};
     res.render("booksDetailed", {
         model: finalData,
+        model2: myTables,
         title: "Liste des livres",
         page_name: "booksDetailed",
     });
@@ -262,7 +263,7 @@ app.post("/create/", (req, res) => {
 
 app.get("/delete/:id", async (req, res) => {
     const id = req.params.id;
-    const sql1= "SELECT * FROM Books WHERE id = ?";
+    const sql1 = "SELECT * FROM Books WHERE id = ?";
     const sql2 = "SELECT * FROM Authors";
     const sql3 = "SELECT * FROM Editions";
     const sql4 = "SELECT * FROM Categories";
@@ -296,11 +297,11 @@ app.get("/delete/:id", async (req, res) => {
     let categories = await db_all(sql4);
     let obj = {book, authors, editions, categories};
 
-        res.render("delete", {
-            model: obj,
-            title: "Supprime de livre",
-            page_name: "deleteBook",
-        });
+    res.render("delete", {
+        model: obj,
+        title: "Supprime de livre",
+        page_name: "deleteBook",
+    });
 
 });
 
@@ -619,6 +620,66 @@ app.post("/delete/edition/:id", (req, res) => {
     });
 });
 
+app.get("/searching/:search?", async (req, res) => {
+    const search = req.query.search;
+    const param1 = search + '%';
+    const param2 = '%' + search;
+    const param3 = '%' + search + '%';
+    let sql1 = "SELECT * FROM Books WHERE title LIKE ? OR title LIKE ? OR title LIKE ? OR title LIKE ?";
+    let sql2 = "SELECT * FROM Authors WHERE authorName LIKE ? OR authorName LIKE ? OR authorName LIKE ? OR authorName LIKE ?";
+    let sql3 = "SELECT * FROM Categories WHERE categoryName LIKE ? OR categoryName LIKE ? OR categoryName LIKE ? OR categoryName LIKE ?";
+
+    async function db_all(query) {
+        return new Promise(function (resolve, reject) {
+            db.all(query, [search, param1, param2, param3], function (err, rows) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
+    let books = await db_all(sql1);
+    let authors = await db_all(sql2);
+    let categories = await db_all(sql3);
+    let obj = {books: books, authors: authors, categories: categories};
+    res.render('search', {
+        model: obj,
+        title: "searching",
+        page_name: "searching page"
+    });
+});
+
+app.get('/filtering', async (req, res) => {
+    const search = req.query.Title;
+    const author = req.query.Author;
+    const category = req.query.Category;
+    const edition = req.query.Edition;
+    const param1 = search + '%';
+    const param2 = '%' + search;
+    const param3 = '%' + search + '%';
+    const params = [param1, param2, param3, author, category, edition];
+    // let sql = "SELECT * FROM Books WHERE title LIKE ? OR title LIKE ? OR title LIKE ? OR title LIKE ? AND authorId = ? AND categoryId = ? AND editionId = ?";
+    // let sql = "SELECT Books.id,Books.title, Authors.authorName, Categories.categoryName FROM ((Books JOIN Authors ON Books.authorId = Authors.id) JOIN Categories ON Books.categoryId = Categories.id) WHERE Books.title LIKE ? OR Books.title LIKE ? OR Books.title LIKE ? OR Books.title LIKE ? AND Books.authorId = ? AND Books.categoryId = ? AND Books.editionId = ?";
+    // const sql =
+    //     "SELECT b.id, b.title, b.language, a.authorName, e.editionName, c.categoryName FROM (Books b JOIN Authors a ON b.authorId = a.id JOIN Editions e ON b.editionId = e.id JOIN Categories c ON b.categoryId = c.id)";
+    const sql1 = "SELECT * FROM (SELECT b.id, b.title, b.language, a.authorName, e.editionName, c.categoryName, b.authorId, b.editionId, b.categoryId FROM (Books b JOIN Authors a ON b.authorId = a.id JOIN Editions e ON b.editionId = e.id JOIN Categories c ON b.categoryId = c.id)) WHERE (title LIKE ? OR title LIKE ? OR title LIKE ?) AND (authorId = ? OR categoryId = ? OR editionId = ?)";
+
+    async function db_all(query) {
+        return new Promise(function (resolve, reject) {
+            db.all(query, params, function (err, rows) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(rows);
+            });
+        });
+    }
+
+    const books = await db_all(sql1);
+    res.render('filterSearch', {model: books, title: 'filtering books', page_name: 'filtering books'});
+});
 /* istanbul ignore next */
 if (!module.parent) {
     app.listen(3000);

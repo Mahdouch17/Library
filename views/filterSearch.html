@@ -1,0 +1,28 @@
+<%- include("header.html") -%>
+<h1>Liste des livres trouvés </h1>
+<div class="table-responsive-sm">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Edition</th>
+            <th>Catégorie</th>
+            <th>Langue</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (const book of model) { %>
+        <tr>
+            <td><%= book.title %></td>
+            <td><%= book.authorName %></td>
+            <td><%= book.editionName %></td>
+            <td><%= book.categoryName %></td>
+            <td><%= book.language %></td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+<%- include("footer.html") -%>
+

@@ -1,73 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-      crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+            integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+            crossorigin="anonymous"
     />
-  </head>
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">MyLibrary</a>
         <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link <%= page_name === ('booksDetailed' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>" href="/">Acceuil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link <%= page_name === ('books' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>" href="/books">Titres</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link <%= page_name === ('authors' || 'editAuthor' || 'addAuthor' || 'deleteAuthor') && 'active' %>" href="/authors">Auteurs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link <%= page_name === ('categories' || 'editCategory' || 'addCategory' || 'deleteCategory') && 'active' %>" href="/categories">Catégories</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link <%= page_name === ('editions' || 'editEdition' || 'addEdition' || 'deleteEdition') && 'active' %>" href="/editions">Editions</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Chercher"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Chercher
-            </button>
-          </form>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link <%= page_name === ('booksDetailed' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>"
+                       href="/">Acceuil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= page_name === ('books' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>"
+                       href="/books">Titres</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= page_name === ('authors' || 'editAuthor' || 'addAuthor' || 'deleteAuthor') && 'active' %>"
+                       href="/authors">Auteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= page_name === ('categories' || 'editCategory' || 'addCategory' || 'deleteCategory') && 'active' %>"
+                       href="/categories">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= page_name === ('editions' || 'editEdition' || 'addEdition' || 'deleteEdition') && 'active' %>"
+                       href="/editions">Editions</a>
+                </li>
+            </ul>
+            <form action="/searching" method="get" class="form-inline my-2 my-lg-0">
+                <input
+                        name="search"
+                        class="form-control mr-sm-2"
+                        type="search"
+                        placeholder="Chercher"
+                        aria-label="Search"
+                />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                    Chercher
+                </button>
+            </form>
         </div>
-      </nav>
-    </header>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-      $(document).ready(function () {
+    </nav>
+</header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
         $("ul.navbar-nav > li").click(function (e) {
-          $("ul.navbar-nav > li").removeClass("active");
-          $(this).addClass("active");
+            $("ul.navbar-nav > li").removeClass("active");
+            $(this).addClass("active");
         });
-      });
-    </script>
-  </body>
+    });
+</script>
+</body>
 </html>

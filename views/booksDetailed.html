@@ -1,37 +1,79 @@
 <%- include("header.html") -%>
 
 <h1>Liste détaillée des livres (<%= model.length %>)</h1>
-
+<form action="/filtering" method="get">
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class="col-form-label col-sm-2" for="Title">Titre</label>
+            <input
+                    autofocus
+                    class="form-control"
+                    name="Title"
+                    value=""
+            />
+        </div>
+        <div class="col-sm-2">
+            <label class="col-form-label col-sm-2" for="Author">Auteur</label>
+            <select class="form-control" name="Author">
+                <option selected>Choisissez l'auteur</option>
+                <% model2.authors.forEach(function(author){ %>
+                <option value="<%= author.id %>"><%= author.authorName %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <label class="col-form-label col-sm-2" for="Category">Catégorie</label>
+            <select class="form-control" name="Category">
+                <option selected>Choisissez la catégorie</option>
+                <% model2.categories.forEach(function(category){ %>
+                <option value="<%= category.id %>"><%= category.categoryName %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <label class="col-form-label col-sm-2" for="Edition">Edition</label>
+            <select class="form-control" name="Edition">
+                <option selected>Choisissez l'édition</option>
+                <% model2.editions.forEach(function(edition){ %>
+                <option value="<%= edition.id %>"><%= edition.editionName %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div style="display: flex;align-items: center;" class="col-sm-2">
+            <button type="submit" class="btn btn-outline-success btn-sm" style="height:60px">Chercher</button>
+        </div>
+    </div>
+</form>
 <div class="table-responsive-sm">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Auteur</th>
-        <th>Edition</th>
-        <th>Catégorie</th>
-        <th>Langue</th>
-        <th class="d-print-none">
-          <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (const book of model) { %>
+    <table class="table table-hover">
+        <thead>
         <tr>
-          <td><%= book.title %></td>
-          <td><%= book.authorName %></td>
-          <td><%= book.editionName %></td>
-          <td><%= book.categoryName %></td>
-          <td><%= book.language %></td>
-          <td class="d-print-none">
-            <a class="btn btn-sm btn-warning" href="/edit/<%= book.id %>">Modifier</a>
-            <a class="btn btn-sm btn-danger" href="/delete/<%= book.id %>">Supprimer</a>
-          </td>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Edition</th>
+            <th>Catégorie</th>
+            <th>Langue</th>
+            <th class="d-print-none">
+                <a class="btn btn-sm btn-success" href="/create">Ajouter</a>
+            </th>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
+        </thead>
+        <tbody>
+        <% for (const book of model) { %>
+        <tr>
+            <td><%= book.title %></td>
+            <td><%= book.authorName %></td>
+            <td><%= book.editionName %></td>
+            <td><%= book.categoryName %></td>
+            <td><%= book.language %></td>
+            <td class="d-print-none">
+                <a class="btn btn-sm btn-warning" href="/edit/<%= book.id %>">Modifier</a>
+                <a class="btn btn-sm btn-danger" href="/delete/<%= book.id %>">Supprimer</a>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
 </div>
 
 <%- include("footer.html") -%>
