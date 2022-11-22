@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -12,7 +12,7 @@
             crossorigin="anonymous"
     />
 </head>
-<body>
+<body class="h-100">
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">MyLibrary</a>
@@ -30,10 +30,6 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link <%= page_name === ('booksDetailed' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>"
-                       href="/">Acceuil</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link <%= page_name === ('books' || 'editBook' || 'addBook' || 'deleteBook') && 'active' %>"
                        href="/books">Titres</a>
